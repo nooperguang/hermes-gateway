@@ -13,6 +13,8 @@ RUN git clone https://github.com/NousResearch/hermes-agent.git
 WORKDIR /app/hermes-agent
 RUN pip install --no-cache-dir -e .
 
-EXPOSE 8000
+# Expose port
+EXPOSE 10000
 
-CMD ["sh", "-c", "hermes gateway --port ${PORT:-8000}"]
+# Run gateway (binds to PORT env var from Render)
+CMD ["sh", "-c", "WEBHOOK_PORT=${PORT:-10000} hermes gateway run"]
