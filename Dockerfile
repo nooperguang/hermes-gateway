@@ -9,5 +9,5 @@ RUN git clone https://github.com/NousResearch/hermes-agent.git
 WORKDIR /app/hermes-agent
 RUN pip install --no-cache-dir -e .
 
-# ✅ อย่าลืม: ขยายตัวแปรที่ CMD (shell จะ expand ให้)
+# ✅ ไม่ต้อง ENV WEBHOOK_PORT — ขยายตัวแปรที่ CMD แทน
 CMD ["sh", "-c", "WEBHOOK_PORT=${PORT:-10000} hermes gateway run"]
