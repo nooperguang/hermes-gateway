@@ -4,7 +4,9 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y curl git && rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/NousResearch/hermes-agent.git
+# Clone ด้วย token เพื่อเลี่ยง rate limit
+ARG GITHUB_TOKEN
+RUN git clone https://${GITHUB_TOKEN}@github.com/NousResearch/hermes-agent.git
 
 WORKDIR /app/hermes-agent
 RUN pip install --no-cache-dir -e .
