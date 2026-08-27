@@ -7,14 +7,12 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy source code
-COPY . .
+# Clone Hermes from GitHub
+RUN git clone https://github.com/NousResearch/hermes-agent.git
 
-# Install Python dependencies (Hermes is in hermes-agent/)
 WORKDIR /app/hermes-agent
 RUN pip install --no-cache-dir -e .
 
 EXPOSE 8000
 
-# Start Hermes gateway
-CMD ["sh", "-c", "cd /app/hermes-agent && hermes gateway --port ${PORT:-8000}"]
+CMD ["sh", "-c", "hermes gateway --port ${PORT:-8000}"]
