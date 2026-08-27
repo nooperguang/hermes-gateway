@@ -4,13 +4,10 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y curl git && rm -rf /var/lib/apt/lists/*
 
-# Clone ด้วย token เพื่อเลี่ยง rate limit
-ARG GITHUB_TOKEN
-RUN git clone https://${GITHUB_TOKEN}@github.com/NousResearch/hermes-agent.git
+RUN git clone https://github.com/NousResearch/hermes-agent.git
 
 WORKDIR /app/hermes-agent
 RUN pip install --no-cache-dir -e .
 
-ENV WEBHOOK_PORT=${PORT:-10000}
-
-CMD ["sh","-c","hermes gateway run"]
+# ✅ อย่าลืม: ขยายตัวแปรที่ CMD (shell จะ expand ให้)
+CMD ["sh", "-c", "WEBHOOK_PORT=${PORT:-10000} hermes gateway run"]
